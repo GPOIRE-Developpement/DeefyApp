@@ -1,0 +1,15 @@
+{
+    "name": "iutnc/deefy",
+    "autoload": {
+        "psr-4": {
+            "iutnc\\deefy\\": "src/classes"
+        }
+    },
+    "authors": [
+        {
+            "name": "GPOIRE-Developpement",
+            "email": "gpoire.developpement@gmail.com"
+        }
+    ],
+    "require": {}
+}
