@@ -46,6 +46,13 @@ class DefaultAction extends Action {
             
             $html .= '<h3>Actions :</h3><ul>';
             $html .= '<li><a href="?action=add-playlist">Créer une nouvelle playlist</a></li>';
+            
+            // Afficher le lien vers la playlist courante si elle existe
+            if (isset($_SESSION['current_playlist']) && isset($_SESSION['current_playlist_id'])) {
+                $playlistName = htmlspecialchars($_SESSION['current_playlist']->nom);
+                $html .= '<li><a href="?action=playlist">Afficher la playlist courante (' . $playlistName . ')</a></li>';
+            }
+            
             $html .= '</ul>';
             
         } catch (AuthnException $e) {

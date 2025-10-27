@@ -43,10 +43,17 @@ class AddPlaylistAction extends Action {
             $stmt = $pdo->prepare("INSERT INTO user2playlist (id_user, id_pl) VALUES (?, ?)");
             $stmt->execute([$user['id'], $playlistId]);
             
+            // Récupérer la playlist complète depuis la BD pour avoir l'ID
+            $playlist = $repo->findPlaylistById($playlistId);
+            
+            // Stocker comme playlist courante en session
+            $_SESSION['current_playlist'] = $playlist;
+            $_SESSION['current_playlist_id'] = $playlistId;
+            
             $_SESSION['message'] = "Playlist \"" . htmlspecialchars($name) . "\" créée avec succès !";
             
-            // Rediriger vers la nouvelle playlist
-            header('Location: ?action=display-playlist&id=' . $playlistId);
+            // Rediriger vers la playlist courante
+            header('Location: ?action=playlist');
             exit();
             
         } else if($_SERVER['REQUEST_METHOD'] == 'GET') {

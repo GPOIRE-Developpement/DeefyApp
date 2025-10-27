@@ -4,6 +4,7 @@ namespace iutnc\deefy\dispatch;
 
 use iutnc\deefy\action\DefaultAction;
 use iutnc\deefy\action\DisplayPlaylistAction;
+use iutnc\deefy\action\DisplayCurrentPlaylistAction;
 use iutnc\deefy\action\AddPlaylistAction;
 use iutnc\deefy\action\AddPodcastTrackAction;
 use iutnc\deefy\action\AddUserAction;
@@ -20,8 +21,9 @@ class Dispatcher {
     public function run():void {
         $actions = array(
             "default" => DefaultAction::class,
-            "playlist" => DisplayPlaylistAction::class,
+            "playlist" => DisplayCurrentPlaylistAction::class,
             "display-playlist" => DisplayPlaylistAction::class,
+            "display-current-playlist" => DisplayCurrentPlaylistAction::class,
             "add-playlist" => AddPlaylistAction::class,
             "add-track" => AddPodcastTrackAction::class,
             "add-user" => AddUserAction::class,
@@ -44,8 +46,15 @@ class Dispatcher {
         }
         
         $userMenu = '';
+        $playlistMenu = '';
+        
         if (isset($_SESSION['user'])) {
             $userMenu = ' | <a href="?action=logout">Se déconnecter</a>';
+        }
+        
+        // Ajouter le lien vers la playlist courante si elle existe
+        if (isset($_SESSION['current_playlist'])) {
+            $playlistMenu = ' | <a href="?action=playlist">Playlist courante</a>';
         }
         
         $menu = <<<HTML
@@ -60,7 +69,7 @@ class Dispatcher {
     
     <nav>
         <a href="?action=default">Accueil</a> | 
-        <a href="?action=add-playlist">Créer une Playlist</a> | 
+        <a href="?action=add-playlist">Créer une Playlist</a>{$playlistMenu} | 
         <a href="?action=add-user">Inscription</a> | 
         <a href="?action=signin">Connexion</a>{$userMenu}
     </nav>

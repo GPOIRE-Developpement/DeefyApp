@@ -5,43 +5,28 @@ namespace iutnc\deefy\action;
 use iutnc\deefy\auth\Authz;
 use iutnc\deefy\exception\AuthnException;
 use iutnc\deefy\render\AudioListRenderer;
-use iutnc\deefy\repository\DeefyRepository;
 
-class DisplayPlaylistAction extends Action {
+class DisplayCurrentPlaylistAction extends Action {
     public function execute(): string {
         session_start();
         
-        // Récupérer l'ID de la playlist depuis le paramètre GET
-        $playlistId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-        
-        if (!$playlistId) {
-            return "<h3>Erreur</h3>
-                    <p style='color: red;'>ID de playlist invalide ou manquant</p>
-                    <p>Utilisez : ?action=display-playlist&id=X</p>
-                    <p><a href='?action=default'>Retour à l'accueil</a></p>";
+        // Vérifier qu'une playlist courante existe en session
+        if (!isset($_SESSION['current_playlist']) || !isset($_SESSION['current_playlist_id'])) {
+            return "<h3>Aucune playlist courante</h3>
+                    <p>Aucune playlist n'est actuellement sélectionnée.</p>
+                    <p><a href='?action=default'>Voir mes playlists</a></p>";
         }
         
+        $playlistId = $_SESSION['current_playlist_id'];
+        $playlist = $_SESSION['current_playlist'];
+        
         try {
-            // Contrôle d'accès : vérifier que l'utilisateur est propriétaire ou admin
+            // Vérifier que l'utilisateur a toujours accès à cette playlist
             Authz::checkPlaylistOwner($playlistId);
-            
-            // Récupérer la playlist avec ses pistes
-            $repo = DeefyRepository::getInstance();
-            $playlist = $repo->findPlaylistById($playlistId);
-            
-            if (!$playlist) {
-                return "<h3>Erreur</h3>
-                        <p style='color: red;'>Playlist introuvable</p>
-                        <p><a href='?action=default'>Retour à l'accueil</a></p>";
-            }
-            
-            // Stocker la playlist comme "playlist courante" en session
-            $_SESSION['current_playlist'] = $playlist;
-            $_SESSION['current_playlist_id'] = $playlistId;
             
             // Afficher la playlist avec le renderer
             $renderer = new AudioListRenderer($playlist);
-            $result = "<h2>Playlist : " . htmlspecialchars($playlist->nom) . "</h2>";
+            $result = "<h2>Playlist courante : " . htmlspecialchars($playlist->nom) . "</h2>";
             
             if(isset($_SESSION['message'])){
                 $result .= '<div style="color: green; font-weight: bold; margin-bottom: 10px;">' 
@@ -57,6 +42,10 @@ class DisplayPlaylistAction extends Action {
             return $result;
             
         } catch (AuthnException $e) {
+            // Si l'utilisateur n'a plus accès, supprimer la playlist courante
+            unset($_SESSION['current_playlist']);
+            unset($_SESSION['current_playlist_id']);
+            
             return "<h3>Accès refusé</h3>
                     <p style='color: red;'>" . htmlspecialchars($e->getMessage()) . "</p>
                     <p><a href='?action=signin'>Se connecter</a></p>

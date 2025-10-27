@@ -11,14 +11,20 @@ class AddPodcastTrackAction extends Action {
     public function execute(): string {
         session_start();
         
-        // Récupérer l'ID de la playlist depuis le paramètre GET
+        // Récupérer l'ID de la playlist depuis le paramètre GET ou la session
         $playlistId = filter_input(INPUT_GET, 'playlist_id', FILTER_VALIDATE_INT);
+        
+        // Si pas d'ID fourni, utiliser la playlist courante en session
+        if (!$playlistId && isset($_SESSION['current_playlist_id'])) {
+            $playlistId = $_SESSION['current_playlist_id'];
+        }
         
         if (!$playlistId) {
             return "<h3>Erreur</h3>
-                    <p style='color: red;'>ID de playlist invalide ou manquant</p>
-                    <p>Utilisez : ?action=add-track&playlist_id=X</p>
-                    <p><a href='?action=default'>Retour à l'accueil</a></p>";
+                    <p style='color: red;'>Aucune playlist sélectionnée</p>
+                    <p>Vous devez d'abord sélectionner une playlist ou en créer une.</p>
+                    <p><a href='?action=default'>Voir mes playlists</a></p>
+                    <p><a href='?action=add-playlist'>Créer une playlist</a></p>";
         }
         
         // Vérifier que l'utilisateur a accès à cette playlist
@@ -101,9 +107,15 @@ class AddPodcastTrackAction extends Action {
             // Ajouter la piste à la playlist
             $repo->addTrackToPlaylist($playlistId, $trackId);
             
+            // Mettre à jour la playlist courante en session si c'est celle-ci
+            if (isset($_SESSION['current_playlist_id']) && $_SESSION['current_playlist_id'] == $playlistId) {
+                $_SESSION['current_playlist'] = $repo->findPlaylistById($playlistId);
+            }
+            
             $_SESSION['message'] = "Piste \"" . htmlspecialchars($titre) . "\" ajoutée avec succès !";
             
-            header('Location: ?action=display-playlist&id=' . $playlistId);
+            // Rediriger vers la playlist courante
+            header('Location: ?action=playlist');
             exit();
             
         } else if($_SERVER['REQUEST_METHOD'] == 'GET') {
