@@ -1,9 +1,9 @@
 # 🎧 Deefy — Mini-Projet BUT Informatique S3  
-> Application web de gestion de playlists audio (inspirée de Spotify/Deezer)
+> Application web de gestion de playlists audio
 
 Projet réalisé dans le cadre de la ressource **Développement Web S3** — IUT Nancy-Charlemagne  
-Binôme : *[à compléter]*  
-Année universitaire : 2024–2025  
+Binôme : Paquin Guillaume, Brissinger Erwann
+Année universitaire : 2025–2026  
 
 ---
 
@@ -15,7 +15,7 @@ Année universitaire : 2024–2025
 - Afficher la playlist courante  
 - Gérer son compte utilisateur  
 
-Le projet s’appuie sur les fonctionnalités développées tout au long des TD du module (TD 14–15) et respecte le modèle **MVC** ainsi qu’une politique d’autorisations stricte.
+Le projet s’appuie sur les fonctionnalités développées tout au long des TD du module et respecte le modèle **MVC** ainsi qu’une politique d’autorisations stricte.
 
 ---
 
