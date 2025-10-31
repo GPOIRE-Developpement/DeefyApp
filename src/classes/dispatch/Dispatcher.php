@@ -63,21 +63,28 @@ class Dispatcher {
 <head>
     <meta charset="UTF-8">
     <title>DeefyApp</title>
+     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <h1>DeefyApp</h1>
-    
-    <nav>
-        <a href="?action=default">Accueil</a> | 
-        <a href="?action=add-playlist">Créer une Playlist</a>{$playlistMenu} | 
-        <a href="?action=add-user">Inscription</a> | 
-        <a href="?action=signin">Connexion</a>{$userMenu}
-    </nav>
-    
-    <hr>
-    
-    <div>
-        {$html}
+
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="VinyleQuiTourne.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la vidéo de fond.
+    </video>
+
+    <div id="overlay">
+        <h1>DeefyApp</h1>
+        
+        <nav>
+            <a href="?action=default">Accueil</a> | 
+            <a href="?action=add-playlist">Créer une Playlist</a>{$playlistMenu} | 
+            <a href="?action=add-user">Inscription</a> | 
+            <a href="?action=signin">Connexion</a>{$userMenu}
+        </nav>
+
+        <div class="content">
+            {$html}
+        </div>
     </div>
 </body>
 </html>

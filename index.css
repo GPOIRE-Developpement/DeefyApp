@@ -1,0 +1,192 @@
+/* ================== VARIABLES ================== */
+:root {
+    --bg-overlay: rgba(10, 10, 25, 0.75);
+    --accent1: #6c63ff;   /* Violet */
+    --accent2: #00d4ff;   /* Bleu néon */
+    --text: #ffffff;
+    --text-muted: #b0b0d0;
+    --radius: 14px;
+    --shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    --transition: 0.3s ease;
+    --gradient: linear-gradient(135deg, var(--accent1), var(--accent2));
+    --padding-section: 60px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    color: var(--text);
+    position: relative;
+    overflow-x: hidden;
+}
+
+#bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: var(--bg-overlay);
+    z-index: -1;
+}
+
+#overlay {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 60px;
+}
+
+h1 {
+    font-size: 2.8rem;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: var(--padding-section) 0 30px;
+    text-align: center;
+    text-shadow: 0 0 25px rgba(108, 99, 255, 0.3);
+}
+
+nav {
+    position: sticky;
+    top: 20px;
+    z-index: 10;
+    background: rgba(25, 25, 55, 0.7);
+    border: 1px solid rgba(108, 99, 255, 0.3);
+    border-radius: 50px;
+    box-shadow: var(--shadow);
+    padding: 16px 40px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 35px;
+    backdrop-filter: blur(12px);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+nav a:hover, nav a.active {
+    background: var(--gradient);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(108, 99, 255, 0.6);
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
+}
+
+.content {
+    width: 85%;
+    max-width: 1100px;
+    margin: 0 auto var(--padding-section);
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: rgba(30, 30, 60, 0.85);
+    padding: 30px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"],
+form input[type="number"],
+form input[type="date"],
+form input[type="file"] {
+    background-color: rgba(40, 40, 70, 0.85);
+    border: 1px solid rgba(108, 99, 255, 0.4);
+    border-radius: var(--radius);
+    padding: 12px 18px;
+    color: var(--text);
+    font-size: 1rem;
+    transition: all var(--transition);
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    outline: none;
+    border-color: var(--accent2);
+    box-shadow: 0 0 12px rgba(0, 212, 255, 0.6);
+}
+
+button, .btn {
+    background: var(--gradient);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 12px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+
+button:hover, .btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(108, 99, 255, 0.6);
+}
+
+audio {
+    width: 100%;
+    margin-top: 15px;
+    filter: invert(1) hue-rotate(180deg);
+    border-radius: var(--radius);
+}
+
+/* ================== RESPONSIVE ================== */
+@media (max-width: 700px) {
+    nav {
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 15px 20px;
+        border-radius: 20px;
+    }
+
+    nav a {
+        font-size: 0.95rem;
+        padding: 10px 14px;
+    }
+
+    .content {
+        width: 95%;
+        gap: 30px;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin: 40px 0 15px;
+    }
+}
