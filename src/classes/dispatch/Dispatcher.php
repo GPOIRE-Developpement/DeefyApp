@@ -62,8 +62,10 @@ class Dispatcher {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>DeefyApp</title>
-     <link rel="stylesheet" href="index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeefyApp - Gestionnaire de Playlists</title>
+    <link rel="stylesheet" href="res/css/style.css">
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
@@ -73,19 +75,108 @@ class Dispatcher {
     </video>
 
     <div id="overlay">
-        <h1>DeefyApp</h1>
+        <h1>🎵 DeefyApp</h1>
         
         <nav>
-            <a href="?action=default">Accueil</a> | 
-            <a href="?action=add-playlist">Créer une Playlist</a>{$playlistMenu} | 
-            <a href="?action=add-user">Inscription</a> | 
-            <a href="?action=signin">Connexion</a>{$userMenu}
+            <a href="?action=default">🏠 Accueil</a>
+            <a href="?action=add-playlist">➕ Créer une Playlist</a>{$playlistMenu}
+            <a href="?action=add-user">👤 Inscription</a>
+            <a href="?action=signin">🔐 Connexion</a>{$userMenu}
         </nav>
 
         <div class="content">
             {$html}
         </div>
     </div>
+    
+    <script>
+        // Gestion du lecteur audio personnalisé
+        function togglePlay(audioId) {
+            const audio = document.getElementById(audioId);
+            const btn = event.target;
+            
+            if (audio.paused) {
+                audio.play();
+                btn.textContent = '⏸';
+            } else {
+                audio.pause();
+                btn.textContent = '▶';
+            }
+        }
+        
+        function toggleMute(audioId) {
+            const audio = document.getElementById(audioId);
+            const btn = event.target;
+            
+            audio.muted = !audio.muted;
+            btn.textContent = audio.muted ? '🔇' : '🔊';
+        }
+        
+        function changeVolume(audioId, value) {
+            const audio = document.getElementById(audioId);
+            audio.volume = value / 100;
+            
+            // Mettre à jour la couleur du slider
+            const slider = event.target;
+            slider.style.setProperty('--volume-percent', value + '%');
+        }
+        
+        function seek(event, audioId) {
+            const audio = document.getElementById(audioId);
+            const progressBar = event.currentTarget;
+            const clickX = event.offsetX;
+            const width = progressBar.offsetWidth;
+            const duration = audio.duration;
+            
+            audio.currentTime = (clickX / width) * duration;
+        }
+        
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return mins + ':' + (secs < 10 ? '0' : '') + secs;
+        }
+        
+        // Initialiser tous les lecteurs audio
+        document.addEventListener('DOMContentLoaded', function() {
+            const audios = document.querySelectorAll('.custom-audio-player audio');
+            
+            audios.forEach(audio => {
+                const audioId = audio.id;
+                
+                // Mettre à jour le temps total quand les métadonnées sont chargées
+                audio.addEventListener('loadedmetadata', function() {
+                    const totalElement = document.getElementById('total-' + audioId);
+                    if (totalElement) {
+                        totalElement.textContent = formatTime(audio.duration);
+                    }
+                });
+                
+                // Mettre à jour la progression pendant la lecture
+                audio.addEventListener('timeupdate', function() {
+                    const currentElement = document.getElementById('current-' + audioId);
+                    const progressElement = document.getElementById('progress-' + audioId);
+                    
+                    if (currentElement) {
+                        currentElement.textContent = formatTime(audio.currentTime);
+                    }
+                    
+                    if (progressElement && audio.duration) {
+                        const percent = (audio.currentTime / audio.duration) * 100;
+                        progressElement.style.width = percent + '%';
+                    }
+                });
+                
+                // Réinitialiser le bouton play à la fin
+                audio.addEventListener('ended', function() {
+                    const btn = audio.parentElement.querySelector('.play-btn');
+                    if (btn) {
+                        btn.textContent = '▶';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
 HTML;

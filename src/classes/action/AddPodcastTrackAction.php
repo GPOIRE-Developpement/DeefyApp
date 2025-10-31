@@ -73,10 +73,19 @@ class AddPodcastTrackAction extends Action {
                 
                 $extension = '.mp3';
                 $fichierNom = uniqid('audio_', true) . $extension;
-                $cheminDestination = 'audio/' . $fichierNom;
+                
+                // Créer le chemin absolu vers le dossier audio
+                $audioDir = __DIR__ . '/../../../audio/';
+                
+                // Créer le dossier audio s'il n'existe pas
+                if (!is_dir($audioDir)) {
+                    mkdir($audioDir, 0777, true);
+                }
+                
+                $cheminDestination = $audioDir . $fichierNom;
                 
                 if (!move_uploaded_file($_FILES['fichier']['tmp_name'], $cheminDestination)) {
-                    return "Erreur : Impossible de sauvegarder le fichier audio.";
+                    return "Erreur : Impossible de sauvegarder le fichier audio. Chemin : " . htmlspecialchars($cheminDestination);
                 }
             } else {
                 return "Erreur : Vous devez uploader un fichier audio .mp3.";
