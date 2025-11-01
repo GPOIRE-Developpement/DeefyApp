@@ -64,7 +64,6 @@ class Dispatcher {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DeefyApp - Gestionnaire de Playlists</title>
-    <link rel="stylesheet" href="res/css/style.css">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
