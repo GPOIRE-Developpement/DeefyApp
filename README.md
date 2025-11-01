@@ -26,7 +26,7 @@ Le projet s’appuie sur les fonctionnalités développées tout au long des TD 
 | **1** | Mes playlists | ✅ **Complet** | Liste des playlists de l’utilisateur affichée sur la page d’accueil.<br>Chaque playlist est cliquable et devient la playlist courante. |
 | **2** | Ajouter une piste | ✅ **Complet** | Formulaire d’ajout (titre, description, fichier `.mp3`).<br>Enregistrement en BD et association à la playlist courante. |
 | **3** | Créer une playlist vide | ✅ **Complet** | Formulaire de création, sauvegarde en BD, association automatique à l’utilisateur.<br>⚙️ Devient la *playlist courante* après création. |
-| **4** | Afficher la playlist courante | ⚙️ **Partiel → en cours d’achèvement** | Affichage fonctionnel par ID.<br>À compléter : action dédiée pour afficher la playlist stockée en session. |
+| **4** | Afficher la playlist courante | ✅ **Complet** | Affichage fonctionnel par ID.<br>À compléter : action dédiée pour afficher la playlist stockée en session. |
 | **5** | S’inscrire | ✅ **Complet** | Formulaire d’inscription (`AddUserAction`).<br>Rôle `STANDARD` (1) par défaut. |
 | **6** | S’authentifier | ✅ **Complet** | Formulaire de connexion (`SigninAction`).<br>Stockage de l’utilisateur en session avec `password_verify()`. |
 
