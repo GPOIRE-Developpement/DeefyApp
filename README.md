@@ -5,6 +5,9 @@ Projet réalisé dans le cadre de la ressource **Développement Web S3** — IUT
 Binôme : Paquin Guillaume, Brissinger Erwann
 Année universitaire : 2025–2026  
 
+## 🖇️WebEtu
+https://webetu.iutnc.univ-lorraine.fr/~e36352u/deefy/?action=default
+
 ---
 
 ## 📋 Présentation du projet
