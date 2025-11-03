@@ -8,6 +8,9 @@ Année universitaire : 2025–2026
 ## 🖇️WebEtu
 https://webetu.iutnc.univ-lorraine.fr/~e36352u/deefy/?action=default
 
+## 🖇️GitHub
+https://github.com/GPOIRE-Developpement/DeefyApp
+
 ---
 
 ## 📋 Présentation du projet
